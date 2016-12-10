@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var path = require('path')
 
 module.exports = {
-  entry: './app.js',
+  entry: './app.jsx',
   output: { path: __dirname, filename: 'bundle.js' },
   resolve: {
     extensions: ['', '.js'],
@@ -18,7 +18,7 @@ module.exports = {
         loader: 'babel',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'stage-0']
+          presets: ['es2015', 'stage-0','react']
         }
       },
       {

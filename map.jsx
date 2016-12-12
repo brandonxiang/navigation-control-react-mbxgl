@@ -1,5 +1,6 @@
 import React from 'react'
 import MapboxGl from 'mapbox-gl';
+import NavigationControl from './navigationcontrol.jsx'
 
 export default class Map extends React.Component {
 	static propTypes = {
@@ -26,6 +27,8 @@ export default class Map extends React.Component {
                     bottom: 0,
                     height: "100%",
 					width: "100%",
-				}}></div>
+				}}>
+
+				</div>
 	}
 }

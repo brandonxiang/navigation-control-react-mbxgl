@@ -12,7 +12,8 @@ export default class NavigationControl extends Component{
             style={{
                 position:"fixed",
                 top:0,
-                right:0
+                right:0,
+                zIndex:5000
             }}>
             <p><Button type="primary" shape="circle" icon="plus"/>
             <Button type="primary" shape="circle" icon="minus" /></p>

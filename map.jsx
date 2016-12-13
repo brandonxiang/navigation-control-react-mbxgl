@@ -7,15 +7,42 @@ export default class Map extends React.Component {
 		accessToken: React.PropTypes.string,
 	}
 
+	constructor(props){
+		super(props)
+		
+        const zoom = 9
+		const lat = 40
+		const lng = -74.50
+
+		this.state = {
+			zoom:zoom,
+			lat:lat,
+			lng:lng
+		}
+	}
+
 	componentDidMount() {
 		MapboxGl.accessToken = this.props.accessToken
 
 		const map = new MapboxGl.Map({
 			container: this.container,
 			style: 'mapbox://styles/mapbox/streets-v8', //stylesheet location
-            center: [-74.50, 40], // starting position
-            zoom: 9 // starting zoom
+            center: [this.state.lng, this.state.lat], // starting position
+            zoom: this.state.zoom // starting zoom
 		});
+        
+		var self = this
+
+
+		map.on("moveend",function(){
+		    console.log(map.getCenter())
+			self.setState({lat:map.getCenter().lat.toFixed(2)});
+			self.setState({lng: map.getCenter().lng.toFixed(2)});
+		})
+
+	    map.on("zoomend",function(){
+			self.setState({zoom:map.getZoom().toFixed(2)}) ;
+		})
 	}
 
 	render() {
@@ -28,7 +55,7 @@ export default class Map extends React.Component {
                     height: "100%",
 					width: "100%",
 				}}>
-
+				<NavigationControl lat={this.state.lat} lng={this.state.lng} zoom={this.state.zoom}/>
 				</div>
 	}
 }

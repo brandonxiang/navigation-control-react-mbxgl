@@ -13,18 +13,22 @@ export default class Map extends React.Component {
         const zoom = 9
 		const lat = 40
 		const lng = -74.50
+		const pitch = 0
+		const bearing = 0
 
 		this.state = {
 			zoom:zoom,
 			lat:lat,
-			lng:lng
+			lng:lng,
+			pitch: pitch,
+			bearing: bearing
 		}
 	}
 
 	componentDidMount() {
 		MapboxGl.accessToken = this.props.accessToken
 
-		const map = new MapboxGl.Map({
+		const map = this.map = new MapboxGl.Map({
 			container: this.container,
 			style: 'mapbox://styles/mapbox/streets-v8', //stylesheet location
             center: [this.state.lng, this.state.lat], // starting position
@@ -36,13 +40,29 @@ export default class Map extends React.Component {
 
 		map.on("moveend",function(){
 		    console.log(map.getCenter())
-			self.setState({lat:map.getCenter().lat.toFixed(2)});
-			self.setState({lng: map.getCenter().lng.toFixed(2)});
+			self.setState({lat:map.getCenter().lat.toFixed(5)});
+			self.setState({lng: map.getCenter().lng.toFixed(5)});
 		})
 
 	    map.on("zoomend",function(){
 			self.setState({zoom:map.getZoom().toFixed(2)}) ;
 		})
+		
+		map.on("pitch",function(){
+			self.setState({pitch:map.getPitch().toFixed(2)})
+		})
+
+		map.on("rotateend",function(){
+			self.setState({bearing:map.getBearing().toFixed(2)})
+		})
+	}
+
+	zoomIn(){
+		this.map.zoomIn()
+	}
+
+	zoomOut(){
+		this.map.zoomOut()
 	}
 
 	render() {
@@ -55,7 +75,15 @@ export default class Map extends React.Component {
                     height: "100%",
 					width: "100%",
 				}}>
-				<NavigationControl lat={this.state.lat} lng={this.state.lng} zoom={this.state.zoom}/>
+				<NavigationControl 
+				zoomIn={this.zoomIn.bind(this)}
+				zoomOut={this.zoomOut.bind(this)}
+				lat={this.state.lat} 
+				lng={this.state.lng} 
+				zoom={this.state.zoom}
+				pitch={this.state.pitch}
+				bearing={this.state.bearing}
+				/>
 				</div>
 	}
 }

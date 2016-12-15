@@ -1,5 +1,11 @@
 import React, {Component} from 'react'
+<<<<<<< HEAD
 import {Button, Icon,InputNumber, Row, Col} from 'antd'
+=======
+import {Button, Icon,InputNumber,Label} from 'antd'
+import './node_modules/antd/dist/antd.css'
+import './index.css'
+>>>>>>> ec7e91e6446c124d6fea98a624b8c5d2c0aad4b7
 
 export default class NavigationControl extends Component{
 
@@ -20,7 +26,17 @@ export default class NavigationControl extends Component{
       pitch: 10
   }
 
+
+
     render(){
+        const outblock = {
+            position:"fixed",
+            top:0,
+            right:0,
+            zIndex:5000
+        }
+        
+
         return <div
             style={{
                 position:"fixed",

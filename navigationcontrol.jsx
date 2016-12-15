@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
-<<<<<<< HEAD
 import {Button, Icon,InputNumber, Row, Col} from 'antd'
-=======
-import {Button, Icon,InputNumber,Label} from 'antd'
 import './node_modules/antd/dist/antd.css'
-import './index.css'
->>>>>>> ec7e91e6446c124d6fea98a624b8c5d2c0aad4b7
+// import './index.css'
 
 export default class NavigationControl extends Component{
 
@@ -26,7 +22,19 @@ export default class NavigationControl extends Component{
       pitch: 10
   }
 
+  onLatChange(e){
+    //   console.log(e)
+      console.log(this.props.map)
+       this.props.map.flyTo({center:[this.state.lng,lat],zoom:this.state.zoom})
+  }
 
+  onLngChange(){
+
+  }
+
+  onZoomChange(){
+
+  }
 
     render(){
         const outblock = {
@@ -48,31 +56,31 @@ export default class NavigationControl extends Component{
                 borderRadius:"3px"
             }}>
             <div>
-            <Button type="primary" icon="plus"/>
-            <Button type="primary" icon="minus"/>
+            <Button type="primary" icon="plus" onClick={this.props.zoomIn}/>
+            <Button type="primary" icon="minus" onClick={this.props.zoomOut}/>
             </div>
             <Row>
             <Col span={8}>
             <div>Zoom</div>
-            <InputNumber defaultValue={this.props.zoom}/>
+            <InputNumber value={this.props.zoom} onChange={this.onZoomChange.bind(this)}/>
             </Col>
             <Col span={8}>
             <div>Bearing</div>
-            <InputNumber defaultValue={this.props.bearing}/>
+            <InputNumber value={this.props.bearing}/>
             </Col>
             <Col span={8}>
             <div>Pitch</div>
-            <InputNumber defaultValue={this.props.pitch} />
+            <InputNumber value={this.props.pitch} />
             </Col>
             </Row>
             <Row>
             <Col span={8}>
             <div>Latitude</div>
-            <InputNumber defaultValue={this.props.lat} />
+            <InputNumber value={this.props.lat} onChange={this.onLatChange.bind(this)}/>
             </Col>
             <Col span={8}>
             <div>Longitude</div>
-            <InputNumber defaultValue={this.props.lng} />
+            <InputNumber value={this.props.lng} onChange={this.onLngChange.bind(this)}/>
             </Col>
             </Row>
         </div>

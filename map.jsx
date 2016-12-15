@@ -28,7 +28,7 @@ export default class Map extends React.Component {
 	componentDidMount() {
 		MapboxGl.accessToken = this.props.accessToken
 
-		const map = this.map = new MapboxGl.Map({
+		const map = this.state.map =this.map = new MapboxGl.Map({
 			container: this.container,
 			style: 'mapbox://styles/mapbox/streets-v8', //stylesheet location
             center: [this.state.lng, this.state.lat], // starting position
@@ -39,7 +39,7 @@ export default class Map extends React.Component {
 
 
 		map.on("moveend",function(){
-		    console.log(map.getCenter())
+		    // console.log(map.getCenter())
 			self.setState({lat:map.getCenter().lat.toFixed(5)});
 			self.setState({lng: map.getCenter().lng.toFixed(5)});
 		})
@@ -65,6 +65,21 @@ export default class Map extends React.Component {
 		this.map.zoomOut()
 	}
 
+	onLatChange(lat){
+		this.map.flyTo({center:[this.state.lng,lat],zoom:this.state.zoom})
+
+	}
+
+	onLngChange(lng){
+		this.setState({lat:lng})
+		this.map.flyTo({center:[this.state.lng,lat],zoom:this.state.zoom})
+	}
+
+	onZoomChange(lat){
+		this.setState({zoom:zoom})
+		this.map.flyTo({center:[this.state.lng,this.state.lat],zoom:zoom})
+	}
+
 	render() {
 			return <div
 				ref={x => this.container = x}
@@ -83,6 +98,7 @@ export default class Map extends React.Component {
 				zoom={this.state.zoom}
 				pitch={this.state.pitch}
 				bearing={this.state.bearing}
+				map={this.state.map}
 				/>
 				</div>
 	}
